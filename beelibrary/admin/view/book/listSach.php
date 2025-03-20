@@ -1,10 +1,7 @@
 <!-- header -->
 <?php include(__DIR__ . '/../layout/header.php'); ?>
 
-
-
 <body class="hold-transition sidebar-mini">
-
     <div class="wrapper">
         <!-- Content Wrapper. Contains page content -->
         <!-- navbar -->
@@ -14,14 +11,12 @@
         <?php include(__DIR__ . '/../layout/sidebar.php'); ?>
 
         <!-- content -->
-        <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Quản lí sản phẩm</h1>
+                            <h1>Quản lí sách</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -30,92 +25,76 @@
                             </ol>
                         </div>
                     </div>
-                </div><!-- /.container-fluid -->
+                </div>
             </section>
 
-            <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <a href="<?= BASE_URL_ADMIN . '?act=add-product' ?>">
-                                        <button class='btn btn-success'>Thêm sản phẩm</button>
+                                    <a href="<?= BASE_URL_ADMIN . '?act=add-book' ?>">
+                                        <button class='btn btn-success'>Thêm sách</button>
                                     </a>
                                 </div>
-                                <!-- /.card-header -->
                                 <div class="card-body">
-
                                     <table id="example2" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Danh mục</th>
-                                                <th>Tên</th>
-                                                <th>Mô Tả Chi Tiết</th>
-                                                <th>Giá Gốc</th>
-                                                <th>Hình Ảnh</th>
-                                                <th>Số Lượng Còn</th>
-                                                <th>Ngày Nhập</th>
-                                                <th>Tương Tác</th>
+                                                <th>Tiêu đề</th>
+                                                <th>Tác giả</th>
+                                                <th>Mô tả</th>
+                                                <th>Giá</th>
+                                                <th>Hình ảnh</th>
+                                                <th>Số lượng</th>
+                                                <th>Ngày nhập sách</th>
+                                                <th>Tương tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($danhSachObjectProduct as $product) { ?>
+                                            <?php foreach ($bookList as $book) { ?>
                                                 <tr>
-                                                    <td> <?= $product->id ?> </td>
-                                                    <td> <?= $product->category_id ?> </td>
-                                                    <td> <?= $product->name ?> </td>
+                                                    <td><?= $book->book_id ?></td>
+                                                    <td><?= $book->category_id ?></td>
+                                                    <td><?= $book->title ?></td>
+                                                    <td><?= $book->author ?></td>
                                                     <td class="description">
                                                         <div class="desc-container" style="max-height: 40px; overflow: hidden; text-overflow: ellipsis;">
-                                                            <?= $product->description ?>
+                                                            <?= $book->description ?>
                                                         </div>
-                                                        <?php if (strlen($product->description) > 100): ?>
+                                                        <?php if (strlen($book->description) > 100): ?>
                                                             <button class="toggle-desc btn btn-link" style="padding: 0;">Xem thêm</button>
                                                         <?php endif; ?>
                                                     </td>
-                                                    <td> <?= $product->price ?> </td>
+                                                    <td><?= $book->price ?></td>
                                                     <td>
                                                         <div style="height: 60px; width: 60px;">
-                                                            <img style="max-height: 100%; max-width: 100%;" src="<?= IMG_ROOT . $product->image_src ?>" alt="">
+                                                            <img style="max-height: 100%; max-width: 100%;" src="<?= IMG_ROOT . $book->image ?>" alt="">
                                                         </div>
-
                                                     </td>
-
-                                                    <td> <?= $product->stock ?> </td>
-                                                    <td> <?= $product->created_date ?> </td>
+                                                    <td><?= $book->stock ?></td>
+                                                    <td><?= $book->published_date ?></td>
                                                     <td>
-                                                        <a href="?act=detail-product&id=<?= $product->id ?>"> Xem</a>
-                                                        <a href="?act=update-product&id=<?= $product->id ?>"> Sửa </a>
-                                                        <a href="?act=delete-product&id=<?= $product->id ?>" onclick="return confirm('Bạn có chắc chắn xoá?')"> Xoá </a>
+                                                        <a href="?act=detail-book&id=<?= $book->book_id ?>">Xem</a>
+                                                        <a href="?act=update-book&id=<?= $book->book_id ?>">Sửa</a>
+                                                        <a href="?act=delete-book&id=<?= $book->book_id ?>" onclick="return confirm('Bạn có chắc chắn xoá?')">Xoá</a>
                                                     </td>
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
-                                <!-- /.card-body -->
                             </div>
-                            <!-- /.card -->
                         </div>
-                        <!-- /.col -->
                     </div>
-                    <!-- /.row -->
                 </div>
-                <!-- /.container-fluid -->
             </section>
-            <!-- /.content -->
         </div>
-        <!-- /.content-wrapper -->
 
-
-
-
-        <?php
-        //footer
-        include "./view/layout/footer.php"
-        ?>
+        <?php include "./view/layout/footer.php" ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('.toggle-desc').forEach(function(button) {
@@ -132,5 +111,4 @@
                 });
             });
         </script>
-
 </body>

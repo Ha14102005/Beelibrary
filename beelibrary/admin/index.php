@@ -7,9 +7,9 @@ include_once "../commons/function.php";
 // 1. Nhúng các file cần thiết
 include_once "controller/CategoryController.php";
 include_once "model/Category.php";
-include_once "controller/ProductController.php";
-include_once "model/Product.php";
-include_once "model/ProductQuery.php";
+include_once "controller/BookController.php";
+include_once "model/Book.php";
+include_once "model/BookQuery.php";
 include_once "controller/OrderController.php";
 include_once "model/Order.php";
 include_once "controller/AuthController.php";
@@ -35,11 +35,11 @@ match ($act) {
     'delete-category' => (new AdminDanhMucControler())->deleteDanhMuc(),
 
     //Product
-    'list-product' => (new ProductController())->showList(),
-    'add-product' => (new ProductController())->showCreate(),
-    'detail-product' => (new ProductController())->showDetail($_GET['id']),
-    'update-product' => (new ProductController())->showUpdate($_GET['id']),
-    'delete-product' => (new ProductController())->delete($_GET['id']),
+    'list-book' => (new BookController())->showList(),
+    'add-book' => (new BookController())->showCreate(),
+    'detail-book' => (new BookController())->showDetail($id),
+    'update-book' => (new BookController())->showUpdate($id),
+    'delete-book' => (new BookController())->delete($id),
 
     //Order
     'list-order' => (new AdminDonHangControler())->listDonHang(),
@@ -48,28 +48,26 @@ match ($act) {
     'edit-order' => (new AdminDonHangControler())->postEditDonHang(),
 
     //Thống kê
-    'thong-ke' => (new StatisticsController())->showStatistics(),
+    //'thong-ke' => (new StatisticsController())->showStatistics(),
 
 
     // User management
-    'list-tai-khoan-quan-tri' => (new AuthController())->danhSachQuanTri(),
-    'form-them-quan-tri' => (new AuthController())->formAddQuanTri(),
-    'add-user' => (new AuthController())->postAddQuanTri(), // Fixed routing for add-user
-    'form-sua-quan-tri' => (new AdminController())->formEditQuanTri($id),
-    'sua-quan-tri' => (new AdminController())->postEditQuanTri($id),
-    'list-tai-khoan-khach-hang' => (new AuthController())->danhSachKhachHang(),
+    // 'list-tai-khoan-quan-tri' => (new AuthController())->danhSachQuanTri(),
+    // 'form-them-quan-tri' => (new AuthController())->formAddQuanTri(),
+    // 'add-user' => (new AuthController())->postAddQuanTri(), // Fixed routing for add-user
+    // 'form-sua-quan-tri' => (new AdminController())->formEditQuanTri($id),
+    // 'sua-quan-tri' => (new AdminController())->postEditQuanTri($id),
+    // 'list-tai-khoan-khach-hang' => (new AuthController())->danhSachKhachHang(),
 
           // Login and logout
     'login-admin'=>(new AuthController())->formLogin(),
     'check-login-admin'=> (new AuthController())->login(),     
     'logout-admin'=> (new AuthController())->logout(),     
-    'delete-khach-hang'=> (new AdminController())->deleteKhachHang(),     
-            // Bình luận
-    'binh-luan'=> (new CommentController())->getAllComment(),         
-    'delete-binh-luan'=> (new CommentController())->deleteComment(),         
+    'delete-khach-hang'=> (new AuthController())->deleteKhachHang(),     
+    //         // Bình luận
+    // 'binh-luan'=> (new CommentController())->getAllComment(),         
+    // 'delete-binh-luan'=> (new CommentController())->deleteComment(),         
     // Default case
     '/' => (new AuthController())->formLogin(),
     default => throw new Exception("Invalid action: $act"), // Handles undefined actions
-
-    
 };

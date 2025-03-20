@@ -1,15 +1,16 @@
 <?php
 
-class Product
+class Book
 {
-    public $id;
+    public $book_id;
+    public $title;
+    public $author;
     public $category_id;
-    public $name;
-    public $description;
     public $price;
     public $stock;
-    public $image_src;
-    public $created_date;
+    public $description;
+    public $image;
+    public $published_date;
 
     public function __construct()
     {

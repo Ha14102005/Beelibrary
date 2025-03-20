@@ -14,7 +14,7 @@ if (isset($_SESSION['user_name']) && $_SESSION['user_name'] !== null) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Laptop Store</title>
+    <title> Bee Library </title>
     <link rel="stylesheet" href="<?= BASE_URL ?>client/assets/css/styleheader.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -53,7 +53,7 @@ if (isset($_SESSION['user_name']) && $_SESSION['user_name'] !== null) {
     <header class="main-header">
         <div class="container">
             <div class="header-left">
-                <a href="<?= BASE_URL ?>index.php" class="logo"><img src="<?= BASE_URL ?>client/views/layout/logo12.jpg" alt="Logo"></a>
+                <a href="<?= BASE_URL ?>index.php" class="logo"><img src="<?= BASE_URL ?>client/views/layout/logo.jpg" alt="Logo"></a>
             </div>
             <nav class="nav-menu">
                 <ul>
@@ -71,24 +71,6 @@ if (isset($_SESSION['user_name']) && $_SESSION['user_name'] !== null) {
         </div>
     </header>
 
-    <!-- Search and Cart Section -->
-    <div class="search-cart-bar">
-        <div class="container">
-            <div class="cart-info">
-                <a href="<?= BASE_URL ?>index.php?controller=Cart&action=view">
-                    <p>$0.00 - Item 4</p>
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-            </div>
-            <div class="search-bar">
-                <form action="<?= BASE_URL ?>index.php" method="GET">
-                    <input type="hidden" name="controller" value="Product">
-                    <input type="hidden" name="action" value="search">
-                    <input type="text" name="query" placeholder="Search product here..." value="<?php echo isset($_GET['query']) ? htmlspecialchars($_GET['query']) : ''; ?>">
-                    <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
-                </form>
-            </div>
-        </div>
-    </div>
+
 </body>
 </html>

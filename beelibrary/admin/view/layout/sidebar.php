@@ -28,7 +28,7 @@
                with font-awesome or any other icon font library -->
           <!-- danh sách sản phẩm -->
           <li class="nav-item">
-            <a href="<?= BASE_URL_ADMIN . '?act=list-product' ?>" class="nav-link">
+            <a href="<?= BASE_URL_ADMIN . '?act=list-book' ?>" class="nav-link">
               <i class="nav-icon fas fa-laptop"></i>
               <p>
                 Danh sách sản phẩm

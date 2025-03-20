@@ -6,92 +6,99 @@ class AuthController
 
     public function __construct()
     {
-        $this->modelAdmin = new Admin(); // Khởi tạo model Admin
+        $this->modelAdmin = new Admin();
     }
 
     // Hiển thị danh sách quản trị viên
     public function danhSachQuanTri()
     {
-        $listQuanTri = $this->modelAdmin->getAllTaiKhoan('admin'); // Lấy tất cả tài khoản quản trị
+        $listQuanTri = $this->modelAdmin->getAllTaiKhoan('admin');
         require_once './view/user/quantri/listQuanTri.php';
     }
 
     // Hiển thị danh sách khách hàng
     public function danhSachKhachHang()
     {
-        $listKhachHang = $this->modelAdmin->getAllTaiKhoan('user'); // Lấy tất cả tài khoản khách hàng
+        $listKhachHang = $this->modelAdmin->getAllTaiKhoan('customer');
         require_once './view/user/khachhang/listKhachHang.php';
     }
 
-    // Thêm tài khoản quản trị viên
+    // Hiển thị form thêm quản trị viên
     public function formAddQuanTri()
     {
         require_once './view/user/quantri/addQuanTri.php';
     }
 
+    // Xử lý thêm quản trị viên
     public function postAddQuanTri()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Lấy dữ liệu từ form
-            $user_name = $_POST['user_name'] ?? '';
-            $password = password_hash($_POST['password'] ?? '', PASSWORD_BCRYPT); // Mã hóa mật khẩu
+            $username = $_POST['user_name'] ?? '';
+            $password = password_hash($_POST['password'] ?? '', PASSWORD_BCRYPT);
             $full_name = $_POST['full_name'] ?? '';
-            $email_user = $_POST['email_user'] ?? '';
-            $phone_user = $_POST['phone_user'] ?? '';
-            $role = $_POST['role'] ?? 'admin'; // Mặc định là admin
-            $img_user = '';
+            $email = $_POST['email_user'] ?? '';
+            $phone = $_POST['phone_user'] ?? '';
+            $role = $_POST['role'] ?? 'admin';
 
-            // Thêm tài khoản quản trị viên vào CSDL
-            $this->modelAdmin->insertuser($user_name, $email_user, $phone_user, $password, $role);
+            if (empty($username) || empty($password) || empty($email)) {
+                $_SESSION['error'] = "Tên đăng nhập, mật khẩu và email là bắt buộc!";
+                header("Location: " . BASE_URL_ADMIN . "?act=form-them-quan-tri");
+                exit();
+            }
 
-            header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
+            $result = $this->modelAdmin->insertuser($username, $email, $phone, $password, $role);
+
+            if ($result) {
+                $_SESSION['success'] = "Thêm tài khoản quản trị viên thành công.";
+                header("Location: " . BASE_URL_ADMIN . "?act=list-tai-khoan-quan-tri");
+            } else {
+                $_SESSION['error'] = "Thêm tài khoản thất bại. Email hoặc username có thể đã tồn tại.";
+                header("Location: " . BASE_URL_ADMIN . "?act=form-them-quan-tri");
+            }
             exit();
         }
     }
-    // Display the login form
+
+    // Hiển thị form đăng nhập
     public function formLogin()
     {
         require_once './view/auth/formLogin.php';
     }
 
-    // Handle login
+    // Xử lý đăng nhập
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
 
-            // Validate input
             if (empty($email) || empty($password)) {
-                $_SESSION["error"] = "Email and password are required!";
+                $_SESSION["error"] = "Email và mật khẩu là bắt buộc!";
                 header("Location: " . BASE_URL_ADMIN . "?act=login-admin");
                 exit();
             }
 
-            // Check login credentials
             $user = $this->modelAdmin->checkLogin($email, $password);
 
             if ($user) {
-                // Successful login
                 $_SESSION['user_admin'] = $user;
                 header("Location: " . BASE_URL_ADMIN);
                 exit();
             } else {
-                // Login failed
-                $_SESSION["error"] = "Invalid email or password!";
+                $_SESSION["error"] = "Email hoặc mật khẩu không đúng!";
                 header("Location: " . BASE_URL_ADMIN . "?act=login-admin");
                 exit();
             }
         }
     }
 
-    // Handle logout
+    // Đăng xuất
     public function logout()
     {
         if (isset($_SESSION["user_admin"])) {
             unset($_SESSION["user_admin"]);
         }
-        header("Location: " . BASE_URL_ADMIN . '?act=login-admin');
+        header("Location: " . BASE_URL_ADMIN . "?act=login-admin");
         exit();
     }
 
@@ -102,20 +109,18 @@ class AuthController
         if (!$id) {
             $_SESSION['error'] = "Không tìm thấy tài khoản cần xóa.";
             header("Location: " . BASE_URL_ADMIN . "?act=list-tai-khoan-khach-hang");
-            exit;
+            exit();
         }
 
-        // Gọi model để xóa khách hàng
         $result = $this->modelAdmin->deleteKhachHangById($id);
         
         if ($result) {
-            $_SESSION['success'] = "Xóa tài khoản thành công.";
+            $_SESSION['success'] = "Xóa tài khoản khách hàng thành công.";
         } else {
             $_SESSION['error'] = "Đã xảy ra lỗi khi xóa tài khoản.";
         }
-
         header("Location: " . BASE_URL_ADMIN . "?act=list-tai-khoan-khach-hang");
-        exit;
+        exit();
     }
 
     // Xóa tài khoản quản trị viên
@@ -125,20 +130,17 @@ class AuthController
         if (!$id) {
             $_SESSION['error'] = "Không tìm thấy tài khoản cần xóa.";
             header("Location: " . BASE_URL_ADMIN . "?act=list-tai-khoan-quan-tri");
-            exit;
+            exit();
         }
 
-        // Gọi model để xóa tài khoản quản trị viên
         $result = $this->modelAdmin->deleteQuanTriById($id);
         
         if ($result) {
-            $_SESSION['success'] = "Xóa tài khoản thành công.";
+            $_SESSION['success'] = "Xóa tài khoản quản trị viên thành công.";
         } else {
             $_SESSION['error'] = "Đã xảy ra lỗi khi xóa tài khoản.";
         }
-
         header("Location: " . BASE_URL_ADMIN . "?act=list-tai-khoan-quan-tri");
-        exit;
+        exit();
     }
 }
-?>

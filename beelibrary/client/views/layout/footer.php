@@ -13,15 +13,15 @@
         <div class="row">
             <div class="col">
                 <h3>Thông tin công ty</h3>
-                <p>LaptopStore.vn</p>
+                <p>BookStore.vn</p>
                 <p>CÔNG TY CỔ PHẦN VIỆT NAM</p>
                 <p>Quận Long Biên, Thành phố Hà Nội, Việt Nam</p>
                 <p>SĐT: 024.9999.9999</p>
-                <p>Website: laptop88.vn</p>
+                <p>Website: book88.vn</p>
                 <p>Sở KHĐT TP. Hà Nội cấp</p>
             </div>
             <div class="col">
-                <h3>Về LaptopStore.vn</h3>
+                <h3>Về BookStore.vn</h3>
                 <ul>
                     <li>Giới thiệu chung</li>
                     <li>Tuyển dụng</li>

@@ -21,7 +21,7 @@ class AdminDanhMucControler{
             $ten_danh_muc =$_POST['ten_danh_muc'];
             $mo_ta =$_POST['mo_ta'];
 
-            //tao mang chua du lieu
+            //Tao mang chua du lieu
             $errors=[];
             if(empty($ten_danh_muc)){
                 $errors['ten_danh_muc']='Tên danh mục không được để trống';
