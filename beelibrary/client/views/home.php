@@ -25,7 +25,7 @@ require_once __DIR__ . '/../views/layout/header.php';
         <div class="search-bar">
             <form action="<?= BASE_URL ?>index.php" method="GET">
                 <input type="hidden" name="controller" value="Home">
-                <input type="hidden" name="action" value="index"> <!-- Gọi HomeController::index -->
+                <input type="hidden" name="action" value="index"> 
                 <input type="text" name="search" placeholder="Tìm kiếm sách..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                 <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
             </form>

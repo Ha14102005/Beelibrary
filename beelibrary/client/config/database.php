@@ -1,6 +1,6 @@
 <?php
 $host = "localhost"; 
-$dbname = "webphp2"; 
+$dbname = "bee_library"; 
 $username = "root"; 
 $password = ""; 
 
