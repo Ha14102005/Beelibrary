@@ -1,0 +1,102 @@
+/* ======== Định dạng chung ======== */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+/* ======== Lưới hiển thị sản phẩm ======== */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Điều chỉnh theo kích thước card */
+    gap: 20px;
+}
+
+/* ======== Card sách ======== */
+.book-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    text-align: left;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ======== Hình ảnh sách ======== */
+.book-image {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.book-image img {
+    width: 100%;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.book-card:hover img {
+    transform: scale(1.05);
+}
+
+/* ======== Nút hành động ======== */
+.book-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.book-card:hover .book-actions {
+    opacity: 1;
+}
+
+.action-btn {
+    background: #ff4d4f;
+    color: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
+}
+
+.action-btn:hover {
+    background: #d9363e;
+}
+
+/* ======== Thông tin sách ======== */
+.book-info {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.book-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.book-price {
+    font-size: 17px;
+    margin: 0;
+    color: #ff4d4f;
+}
+
+.book-stock {
+    font-size: 15px;
+    color: #151313;
+}

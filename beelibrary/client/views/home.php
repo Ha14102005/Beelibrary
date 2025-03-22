@@ -15,56 +15,56 @@ require_once __DIR__ . '/../views/layout/header.php';
 
 <body>
 <div class="search-cart-bar">
-        <div class="container">
-            <div class="cart-info">
-                <a href="<?= BASE_URL ?>index.php?controller=Cart&action=view">
-                    <p>$0.00 - Item 4</p>
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-            </div>
-            <div class="search-bar">
-                <form action="<?= BASE_URL ?>index.php" method="GET">
-                    <input type="hidden" name="controller" value="Product">
-                    <input type="hidden" name="action" value="search">
-                    <input type="text" name="query" placeholder="Search product here..." value="<?php echo isset($_GET['query']) ? htmlspecialchars($_GET['query']) : ''; ?>">
-                    <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
-                </form>
-            </div>
+    <div class="container">
+        <div class="cart-info">
+            <a href="<?= BASE_URL ?>index.php?controller=Cart&action=view">
+                <p>$0.00 - Item 4</p>
+                <i class="fas fa-shopping-cart"></i>
+            </a>
+        </div>
+        <div class="search-bar">
+            <form action="<?= BASE_URL ?>index.php" method="GET">
+                <input type="hidden" name="controller" value="Home">
+                <input type="hidden" name="action" value="index"> <!-- Gọi HomeController::index -->
+                <input type="text" name="search" placeholder="Tìm kiếm sách..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
         </div>
     </div>
-    <div class="container">
-        <!-- Danh sách sách -->
-        <div class="products-grid">
-            <?php if (!empty($books)): ?>
-                <?php foreach ($books as $book): ?>
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="<?= htmlspecialchars($book['image']); ?>" alt="<?= htmlspecialchars($book['title']); ?>">
-                            <div class="product-actions">
-                                <a href="#" class="action-btn"><i class="fas fa-heart"></i></a>
-                                <a href="<?= BASE_URL ?>index.php?controller=Home&action=productDetail&book_id=<?= $book['book_id'] ?>" class="action-btn"><i class="fas fa-eye"></i></a>
-                                <a href="<?= BASE_URL ?>index.php?controller=Cart&action=addToCart&book_id=<?= $book['book_id'] ?>&quantity=1" class="action-btn">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2 class="product-name"><?= htmlspecialchars($book['title']); ?></h2>
-                            <p class="product-author">Tác giả: <?= htmlspecialchars($book['author']); ?></p>
-                            <p class="product-price">
-                                <?= number_format($book['price'], 0, ',', '.') ?> VNĐ
-                            </p>
-                            <p class="product-stock">
-                                <?= $book['stock'] > 0 ? $book['stock'] . ' sản phẩm còn lại' : 'Hết hàng'; ?>
-                            </p>
+</div>
+<div class="container">
+    <!-- Danh sách sách -->
+    <div class="products-grid">
+        <?php if (!empty($books)): ?>
+            <?php foreach ($books as $book): ?>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="<?= htmlspecialchars($book['image']); ?>" alt="<?= htmlspecialchars($book['title']); ?>">
+                        <div class="product-actions">
+                            <a href="#" class="action-btn"><i class="fas fa-heart"></i></a>
+                            <a href="<?= BASE_URL ?>index.php?controller=Home&action=productDetail&book_id=<?= $book['book_id'] ?>" class="action-btn"><i class="fas fa-eye"></i></a>
+                            <a href="<?= BASE_URL ?>index.php?controller=Cart&action=addToCart&book_id=<?= $book['book_id'] ?>&quantity=1" class="action-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Không có sách nào.</p>
-            <?php endif; ?>
-        </div>
+                    <div class="product-info">
+                        <h2 class="product-name"><?= htmlspecialchars($book['title']); ?></h2>
+                        <p class="product-author">Tác giả: <?= htmlspecialchars($book['author']); ?></p>
+                        <p class="product-price">
+                            <?= number_format($book['price'], 0, ',', '.') ?> VNĐ
+                        </p>
+                        <p class="product-stock">
+                            <?= $book['stock'] > 0 ? $book['stock'] . ' sản phẩm còn lại' : 'Hết hàng'; ?>
+                        </p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Không có sách nào.</p>
+        <?php endif; ?>
     </div>
+</div>
 </body>
 
 </html>

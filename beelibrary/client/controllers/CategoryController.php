@@ -1,13 +1,14 @@
 <?php
 require_once dirname(__DIR__, 2) . '/commons/env.php';
 require_once dirname(__DIR__, 2) . '/commons/function.php';
+
 class CategoryController {
     private $db;
 
     public function __construct() {
         $this->db = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
         if ($this->db->connect_error) {
-            die("Database connection failed: " . $this->db->connect_error);
+            die("Kết nối cơ sở dữ liệu thất bại: " . $this->db->connect_error);
         }
     }
 
@@ -17,15 +18,14 @@ class CategoryController {
         }
         $category_id = intval($params['category_id']);
     
-        $stmt = $this->db->prepare("SELECT * FROM product WHERE category_id = ?");
+        $stmt = $this->db->prepare("SELECT book_id, title, author, price, stock, image FROM books WHERE category_id = ?");
         $stmt->bind_param("i", $category_id);
         $stmt->execute();
         $result = $stmt->get_result();
-        $products = $result->fetch_all(MYSQLI_ASSOC);
+        $books = $result->fetch_all(MYSQLI_ASSOC); // Đổi $products thành $books
         $stmt->close();
     
         include_once __DIR__ . "/../views/category.php";
     }
-    
 }
 ?>
