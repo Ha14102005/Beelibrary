@@ -33,7 +33,7 @@ require_once __DIR__ . '/../views/layout/header.php';
                             <h2 class="book-title"><?php echo htmlspecialchars($book['title']); ?></h2>
                             <p class="product-author">Tác giả: <?= htmlspecialchars($book['author']); ?></p>
                             <p class="book-price">
-                                <?php echo number_format($book['price'], 2); ?> VNĐ
+                            <?= number_format($book['price'], 0, ',', '.') ?> VNĐ
                             <p class="book-stock">
                                 <?php echo $book['stock'] > 0 ? $book['stock'] . ' sản phẩm còn lại' : '<span style="color: red;">Hết hàng</span>'; ?>
                             </p>

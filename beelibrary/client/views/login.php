@@ -13,14 +13,16 @@
     <h2>Login Account</h2>
     <?php if (isset($_SESSION['error_message'])): ?>
         <div class="error">
-            <?= $_SESSION['error_message']; unset($_SESSION['error_message']); ?>
+            <?= htmlspecialchars($_SESSION['error_message']); unset($_SESSION['error_message']); ?>
         </div>
     <?php endif; ?>
     <form action="../../client/controllers/UserController.php?action=login" method="POST">
         <label for="email">Email Address:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <!-- Thêm CSRF token nếu cần -->
+        <!-- <input type="hidden" name="csrf_token" value="<?php //echo generateCsrfToken(); ?>"> -->
         <button type="submit">Sign In</button>
     </form>
     <div class="signup-link">

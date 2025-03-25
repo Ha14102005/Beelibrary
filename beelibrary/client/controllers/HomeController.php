@@ -27,7 +27,7 @@ class HomeController {
         $bookQuery = "SELECT book_id, title, author, description, price, stock, image, published_date 
                       FROM books 
                       WHERE book_id = :book_id";
-        $reviewQuery = "SELECT r.review_id, r.rating, r.comment, r.review_date, u.full_name 
+        $reviewQuery = "SELECT r.review_id, r.rating, r.comment, r.review_date 
                         FROM reviews r 
                         JOIN users u ON r.user_id = u.user_id 
                         WHERE r.book_id = :book_id 

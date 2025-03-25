@@ -6,11 +6,11 @@ class User {
         $this->db = $db;
     }
 
-    // Lấy người dùng theo email
     public function getUserByEmail($email) {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
-            $stmt->execute([$email]);
+            $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Lỗi truy vấn getUserByEmail: " . $e->getMessage());
@@ -18,26 +18,45 @@ class User {
         }
     }
 
-    // Tạo người dùng mới
-    public function createUser($username, $email, $password, $role = 'user') {
+    public function createUser($username, $email, $phone, $password, $role = 'customer') {
         try {
             $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-            $stmt = $this->db->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
-            return $stmt->execute([$username, $email, $hashed_password, $role]);
+            $stmt = $this->db->prepare("
+                INSERT INTO users (username, email, phone, password, role) 
+                VALUES (:username, :email, :phone, :password, :role)
+            ");
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':phone', $phone, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+            $stmt->bindParam(':role', $role, PDO::PARAM_STR);
+            return $stmt->execute();
         } catch (PDOException $e) {
             error_log("Lỗi truy vấn createUser: " . $e->getMessage());
             return false;
         }
     }
 
-    // Kiểm tra email đã tồn tại chưa
     public function isEmailExists($email) {
         try {
-            $stmt = $this->db->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
-            $stmt->execute([$email]);
+            $stmt = $this->db->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
             return $stmt->fetchColumn() > 0;
         } catch (PDOException $e) {
             error_log("Lỗi truy vấn isEmailExists: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function isPhoneExists($phone) {
+        try {
+            $stmt = $this->db->prepare("SELECT COUNT(*) FROM users WHERE phone = :phone");
+            $stmt->bindParam(':phone', $phone, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $e) {
+            error_log("Lỗi truy vấn isPhoneExists: " . $e->getMessage());
             return false;
         }
     }

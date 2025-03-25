@@ -67,10 +67,6 @@ require_once __DIR__ . '/../views/layout/header.php';
                     <form action="<?= BASE_URL ?>client/controllers/HomeController.php" method="POST">
                         <input type="hidden" name="book_id" value="<?= $book['book_id']; ?>">
                         <div class="form-group">
-                            <label for="rating">Đánh giá (1-5):</label>
-                            <input type="number" name="rating" id="rating" min="1" max="5" class="form-control" required>
-                        </div>
-                        <div class="form-group">
                             <label for="comment">Nhận xét:</label>
                             <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
                         </div>
