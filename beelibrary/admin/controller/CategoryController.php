@@ -78,8 +78,9 @@ class AdminDanhMucControler{
         }  
     }
     public function deleteDanhMuc(){
-        $id=$_GET['id_category'];
+        $id=$_POST['id_category'];
         $danhmuc=$this->Category->getDetailDanhMuc($id);
+      
         if(isset($danhmuc)){
             $this->Category->destroyDanhMuc($id);
         }

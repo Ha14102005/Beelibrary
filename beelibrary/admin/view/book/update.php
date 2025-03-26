@@ -37,10 +37,15 @@
                                     <h3 class="card-title">Chỉnh sửa thông tin sách</h3>
                                 </div>
                                 <form action="" method="POST" enctype="multipart/form-data">
+                                    
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="category_id">Danh mục</label>
-                                            <input type="text" class="form-control" name="category_id" id="category_id" value="<?= htmlspecialchars($book->category_id) ?>" required>
+                                            <select class="form-control" name="category_id" id="category_id">
+                                                <?php foreach ($listDanhMuc as $category) { ?>
+                                                    <option value="<?= $category->category_id ?>" <?= $category->category_id == $book->category_id ? 'selected' : '' ?>><?= $category->name ?></option>
+                                                <?php } ?>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="title">Tên sách</label>

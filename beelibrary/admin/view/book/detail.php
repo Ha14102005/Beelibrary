@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <h3><?= $book->title ?></h3>
-                                            <p><strong>Danh mục:</strong> <?= $book->category_id ?></p>
+                                            <p><strong>Danh mục:</strong> <?= $book->category_name ?></p>
                                             <p><strong>Tác giả:</strong> <?= $book->author ?></p>
                                             <p><strong>Giá:</strong> <?= $book->price ?> <sup>₫</sup></p>
                                             <p><strong>Số lượng còn:</strong> <?= $book->stock ?></p>

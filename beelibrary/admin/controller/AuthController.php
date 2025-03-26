@@ -1,3 +1,4 @@
+
 <?php
 
 class AuthController
@@ -63,34 +64,42 @@ class AuthController
     public function formLogin()
     {
         require_once './view/auth/formLogin.php';
+        deleteSessionError();
+        exit();
     }
 
     // Xử lý đăng nhập
     public function login()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-            if (empty($email) || empty($password)) {
-                $_SESSION["error"] = "Email và mật khẩu là bắt buộc!";
-                header("Location: " . BASE_URL_ADMIN . "?act=login-admin");
-                exit();
-            }
+        // Gọi model để kiểm tra đăng nhập
+        $user = $this->modelAdmin->checkLogin($email, $password);
 
-            $user = $this->modelAdmin->checkLogin($email, $password);
+        // Kiểm tra đăng nhập thành công
+        if ($user && isset($user['email']) && $user['email'] === $email) { 
+            // Lưu thông tin user vào session
+            $_SESSION['user_admin'] = $user;
+            // var_dump($_SESSION); die(); // Kiểm tra session có lưu không
+            // Chuyển hướng về trang admin
+            header("Location: " . BASE_URL_ADMIN );
+            exit();
+        } else {
+            // Đăng nhập thất bại -> Lưu thông báo lỗi vào session
+            $_SESSION['error'] = "Sai email hoặc mật khẩu!";
+            $_SESSION['flash'] = true;
 
-            if ($user) {
-                $_SESSION['user_admin'] = $user;
-                header("Location: " . BASE_URL_ADMIN);
-                exit();
-            } else {
-                $_SESSION["error"] = "Email hoặc mật khẩu không đúng!";
-                header("Location: " . BASE_URL_ADMIN . "?act=login-admin");
-                exit();
-            }
+            // Quay lại trang đăng nhập
+            header("Location: " . BASE_URL_ADMIN . '?act=login-admin');
+            exit();
         }
     }
+}
+
+
+
 
     // Đăng xuất
     public function logout()
@@ -113,7 +122,7 @@ class AuthController
         }
 
         $result = $this->modelAdmin->deleteKhachHangById($id);
-        
+
         if ($result) {
             $_SESSION['success'] = "Xóa tài khoản khách hàng thành công.";
         } else {
@@ -134,7 +143,7 @@ class AuthController
         }
 
         $result = $this->modelAdmin->deleteQuanTriById($id);
-        
+
         if ($result) {
             $_SESSION['success'] = "Xóa tài khoản quản trị viên thành công.";
         } else {

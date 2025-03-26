@@ -60,7 +60,6 @@ if (isset($_SESSION['user_name']) && $_SESSION['user_name'] !== null) {
                 <ul>
                     <li><a href="<?= BASE_URL ?>index.php" class="<?= (!isset($_GET['controller']) || $_GET['controller'] == 'Home') ? 'active' : '' ?>">Home</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropbtn">Danh mục</a>
                         <div class="dropdown-content">
                             <!-- Truyện cổ tích -->
                             <div class="sub-dropdown">
@@ -70,56 +69,64 @@ if (isset($_SESSION['user_name']) && $_SESSION['user_name'] !== null) {
                                     <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=12">Cổ tích thế giới</a>
                                 </div>
                             </div>
+                    </li>
 
-                            <!-- Văn học -->
-                            <div class="sub-dropdown">
-                                <a href="#">Văn học</a>
-                                <div class="sub-dropdown-content">
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=2">Văn học Việt Nam</a>
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=11">Văn học thế giới</a>
-                                </div>
-                            </div>
-
-                            <!-- Lịch sử -->
-                            <div class="sub-dropdown">
-                                <a href="#">Lịch sử</a>
-                                <div class="sub-dropdown-content">
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=8">Lịch sử Việt Nam</a>
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=4">Lịch sử thế giới</a>
-                                </div>
-                            </div>
-
-                            <!-- Truyện tranh -->
-                            <div class="sub-dropdown">
-                                <a href="#">Truyện tranh</a>
-                                <div class="sub-dropdown-content">
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=3">Truyện tranh</a>
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=14">Trọn bộ truyện tranh</a>
-                                </div>
-                            </div>
-
-                            <!-- Tiểu thuyết -->
-                            <div class="sub-dropdown">
-                                <a href="#">Tiểu thuyết</a>
-                                <div class="sub-dropdown-content">
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=5">Tiểu thuyết trinh thám</a>
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=9">Tiểu thuyết giả tưởng</a>
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=10">Tiểu thuyết kinh dị</a>
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=13">Trọn bộ sách tiểu thuyết</a>
-                                </div>
-                            </div>
-
-                            <!-- Tự truyện -->
-                            <div class="sub-dropdown">
-                                <a href="#">Tự truyện</a>
-                                <div class="sub-dropdown-content">
-                                    <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=6">Sách tự truyện</a>
-                                </div>
+                    <li>
+                        <!-- Văn học -->
+                        <div class="sub-dropdown">
+                            <a href="#">Văn học</a>
+                            <div class="sub-dropdown-content">
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=2">Văn học Việt Nam</a>
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=11">Văn học thế giới</a>
                             </div>
                         </div>
                     </li>
-                </ul>
-                <div class="container">
+                        <!-- Lịch sử -->
+                        <div class="sub-dropdown">
+                    <li>
+
+                            <a href="#">Lịch sử</a>
+                            <div class="sub-dropdown-content">
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=8">Lịch sử Việt Nam</a>
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=4">Lịch sử thế giới</a>
+                            </div>
+                    </li>
+
+                        </div>
+                    <!-- Truyện tranh -->
+                    <div class="sub-dropdown">
+                        <li>
+
+                            <a href="#">Truyện tranh</a>
+                            <div class="sub-dropdown-content">
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=3">Truyện tranh</a>
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=14">Trọn bộ truyện tranh</a>
+                            </div>
+                        </li>
+
+                    </div>
+                    <li>
+
+                        <!-- Tiểu thuyết -->
+                        <div class="sub-dropdown">
+                            <a href="#">Tiểu thuyết</a>
+                            <div class="sub-dropdown-content">
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=5">Tiểu thuyết trinh thám</a>
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=9">Tiểu thuyết giả tưởng</a>
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=10">Tiểu thuyết kinh dị</a>
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=13">Trọn bộ sách tiểu thuyết</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <!-- Tự truyện -->
+                        <div class="sub-dropdown">
+                            <a href="#">Tự truyện</a>
+                            <div class="sub-dropdown-content">
+                                <a href="<?= BASE_URL ?>index.php?controller=Category&action=list&category_id=6">Sách tự truyện</a>
+                            </div>
+                        </div>
+                    </li>
                     <div class="search-bar">
                         <form action="<?= BASE_URL ?>index.php" method="GET">
                             <input type="hidden" name="controller" value="Home">
@@ -133,9 +140,9 @@ if (isset($_SESSION['user_name']) && $_SESSION['user_name'] !== null) {
                             <i class="fas fa-shopping-cart"></i>
                         </a>
                     </div>
-                </div>
             </nav>
         </div>
+
     </header>
 </body>
 

@@ -1,98 +1,101 @@
-<?php 
-class AdminDanhMuc{
+<?php
+class AdminDanhMuc
+{
     public $conn;
 
     public function __construct()
     {
         $this->conn = connectDB();
     }
-    
-    public function getAllDanhMuc() {
-        try {
-            $sql='SELECT * FROM categories';
 
-            $stmt=$this->conn->prepare($sql);
+    public function getAllDanhMuc()
+    {
+        try {
+            $sql = 'SELECT * FROM categories ORDER BY category_id DESC';
+
+            $stmt = $this->conn->prepare($sql);
 
             $stmt->execute();
 
-            return $stmt->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_OBJ); // Đảm bảo trả về dạng Object
 
         } catch (Exception $e) {
-            echo 'lỗi' .$e->getMessage();
+            echo 'lỗi' . $e->getMessage();
         }
     }
-    public function insertDanhMuc($ten_danh_muc,$mo_ta) {
+    public function insertDanhMuc($ten_danh_muc, $mo_ta)
+    {
         try {
             $sql = 'INSERT INTO `categories` (`name`, `description`) 
                     VALUES (:ten_danh_muc,:mo_ta)';
 
-            $stmt=$this->conn->prepare($sql);
+            $stmt = $this->conn->prepare($sql);
 
             $stmt->execute(
                 [
-                    ':ten_danh_muc'=>$ten_danh_muc,
-                    ':mo_ta'=>$mo_ta
+                    ':ten_danh_muc' => $ten_danh_muc,
+                    ':mo_ta' => $mo_ta
                 ]
             );
             return true;
         } catch (Exception $e) {
-            echo 'lỗi' .$e->getMessage();
+            echo 'lỗi' . $e->getMessage();
         }
     }
 
-    public function getDetailDanhMuc($id) {
+    public function getDetailDanhMuc($id)
+    {
         try {
             $sql = 'SELECT * FROM categories WHERE category_id =:id';
 
-            $stmt=$this->conn->prepare($sql);
+            $stmt = $this->conn->prepare($sql);
 
             $stmt->execute(
                 [
-                    ':id'=>$id
+                    ':id' => $id
                 ]
             );
             return $stmt->fetch();
         } catch (Exception $e) {
-            echo 'lỗi' .$e->getMessage();
+            echo 'lỗi' . $e->getMessage();
         }
     }
-    public function updateDanhMuc($id,$ten_danh_muc,$mo_ta) {
+    public function updateDanhMuc($id, $ten_danh_muc, $mo_ta)
+    {
         try {
             $sql = 'UPDATE categories SET `name`=:ten_danh_muc,`description`=:mo_ta WHERE `category_id`=:id';
 
 
-            $stmt=$this->conn->prepare($sql);
+            $stmt = $this->conn->prepare($sql);
 
             $stmt->execute(
                 [
-                    ':ten_danh_muc'=>$ten_danh_muc,
-                    ':mo_ta'=>$mo_ta,
-                    ':id'=>$id
+                    ':ten_danh_muc' => $ten_danh_muc,
+                    ':mo_ta' => $mo_ta,
+                    ':id' => $id
                 ]
             );
             return true;
         } catch (Exception $e) {
-            echo 'lỗi' .$e->getMessage();
+            echo 'lỗi' . $e->getMessage();
         }
     }
-    public function destroyDanhMuc($id) {
+    public function destroyDanhMuc($id)
+    {
         try {
             $sql = 'DELETE FROM categories WHERE `category_id`=:id';
 
 
-            $stmt=$this->conn->prepare($sql);
+            $stmt = $this->conn->prepare($sql);
 
             $stmt->execute(
                 [
-                
-                    ':id'=>$id
+                    ':id' => $id
                 ]
             );
             return true;
         } catch (Exception $e) {
-            echo 'lỗi' .$e->getMessage();
+            echo 'lỗi' . $e->getMessage();
         }
     }
 }
-
-?>

@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 //Base URL
 include_once "../commons/env.php";
 include_once "../commons/function.php";
@@ -18,13 +20,15 @@ include_once "model/Admin.php";
 $act = $_GET['act'] ?? '/';
 $id = $_GET['id'] ?? null;
 
-if ($act !== 'login-admin' && $act !== 'check-login-admin') {
+if ($act !== 'login-admin' && $act !== 'check-login-admin' && $act !== 'logout-admin') {
     checkLoginAdmin();
 }
+
 
 // Để bảo bảo tính chất chỉ gọi 1 hàm Controller để xử lý request thì mình sử dụng match
 match ($act) {
     // Trang chủ
+    '/'           => (new BookController())->showList(),
 
     //Category
     'list-category' => (new AdminDanhMucControler())->listDanhMuc(),
@@ -42,10 +46,12 @@ match ($act) {
     'delete-book' => (new BookController())->delete($id),
 
     //Order
-    'list-order' => (new AdminDonHangControler())->listDonHang(),
-    'detail-order' => (new AdminDonHangControler())->detailDonHang(),
-    'form-edit-order' => (new AdminDonHangControler())->formEditDonHang(),
-    'edit-order' => (new AdminDonHangControler())->postEditDonHang(),
+    'searchDonHang' => (new DonHangController())->searchDonHang(),
+    'list-order'  => (new DonHangController())->listDonHang(),
+    'delete-don-hang'  => (new DonHangController())->Delete(),
+    'form-sua-don-hang'  => (new DonHangController())->ShowUpdate(),
+    'sua-don-hang'  => (new DonHangController())->handleUpdate(),
+    'chi-tiet-don-hang'=> (new DonHangController())->detailDonHang(),
 
     //Thống kê
     //'thong-ke' => (new StatisticsController())->showStatistics(),
@@ -59,15 +65,15 @@ match ($act) {
     // 'sua-quan-tri' => (new AdminController())->postEditQuanTri($id),
     // 'list-tai-khoan-khach-hang' => (new AuthController())->danhSachKhachHang(),
 
-          // Login and logout
-    'login-admin'=>(new AuthController())->formLogin(),
-    'check-login-admin'=> (new AuthController())->login(),     
-    'logout-admin'=> (new AuthController())->logout(),     
-    'delete-khach-hang'=> (new AuthController())->deleteKhachHang(),     
+    // Login and logout
+    'login-admin' => (new AuthController())->formLogin(),
+    'check-login-admin' => (new AuthController())->login(),
+    'logout-admin' => (new AuthController())->logout(),
+    'delete-khach-hang' => (new AuthController())->deleteKhachHang(),
     //         // Bình luận
     // 'binh-luan'=> (new CommentController())->getAllComment(),         
     // 'delete-binh-luan'=> (new CommentController())->deleteComment(),         
     // Default case
-    '/' => (new AuthController())->formLogin(),
+    // '/' => (new AuthController())->formLogin(),
     default => throw new Exception("Invalid action: $act"), // Handles undefined actions
 };

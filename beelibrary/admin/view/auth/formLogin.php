@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +15,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="./assets/dist/css/adminlte.min.css?v=3.2.0">
 </head>
+
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="card card-outline card-primary">
@@ -21,31 +23,39 @@
         <a href="#" class="h1">Mời đăng nhập</a>
       </div>
       <div class="card-body">
-        <?php if (isset($_SESSION['error'])): ?>
-          <p class="text-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></p>
-        <?php else: ?>
-          <p class="login-box-msg">Vui lòng đăng nhập</p>
-        <?php endif; ?>
 
-        <form action="<?= BASE_URL_ADMIN ?>?act=check-login-admin" method="post">
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email" name="email" required>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
+
+        <form action="<?= BASE_URL_ADMIN . '?act=check-login-admin' ?>" method="POST">
+
+          <div class="mb-3">
+            <label for="username" class="form-label">Tài khoản</label>
+            <input type="text" class="form-control" id="username" name="email" placeholder="Nhập tên đăng nhập">
+          </div>
+
+          <div class="mb-3">
+            <div class="float-end">
+              <a href="auth-pass-reset-basic.html" class="text-muted">Quên mật khẩu?</a>
+            </div>
+            <label class="form-label" for="password-input">Mật khẩu</label>
+            <div class="position-relative auth-pass-inputgroup mb-3">
+              <input type="password" class="form-control pe-5 password-input" name="password" placeholder="Nhập mật khẩu" id="password-input">
+              <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
             </div>
           </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+            <label class="form-check-label" for="auth-remember-check">Lưu thông tin</label>
           </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+          <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger">
+              <?= ($_SESSION['error']); ?>
+            </div>
+            <?php unset($_SESSION['error']); // Xóa lỗi sau khi hiển thị 
+            ?>
+          <?php endif; ?>
+          <div class="mt-4">
+            <button class="btn btn-success w-100" type="submit">Sign In</button>
           </div>
         </form>
       </div>
@@ -59,4 +69,8 @@
   <!-- AdminLTE App -->
   <script src="./assets/dist/js/adminlte.min.js?v=3.2.0"></script>
 </body>
+
 </html>
+<?php
+// $password = '123456789';
+// echo password_hash($password, PASSWORD_DEFAULT);

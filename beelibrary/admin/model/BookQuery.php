@@ -17,7 +17,9 @@ class BookQuery
     public function all()
     {
         try {
-            $sql = "SELECT DISTINCT * FROM books";
+            $sql = "SELECT DISTINCT books.*, categories.name as category_name
+            FROM books 
+            LEFT JOIN categories ON books.category_id = categories.category_id ORDER BY book_id DESC";
             $data = $this->pdo->query($sql)->fetchAll();
 
             $bookList = [];
@@ -25,6 +27,8 @@ class BookQuery
                 $book = new Book();
                 $book->book_id = $value["book_id"];
                 $book->category_id = $value["category_id"];
+                $book->category_name = $value["category_name"];
+                
                 $book->title = $value["title"];
                 $book->author = $value["author"];
                 $book->description = $value["description"];
@@ -32,7 +36,7 @@ class BookQuery
                 $book->stock = $value["stock"];
                 $book->image = $value["image"];
                 $book->published_date = $value["published_date"];
-                
+
                 $bookList[] = $book;
             }
 
@@ -66,7 +70,9 @@ class BookQuery
     public function find($id)
     {
         try {
-            $sql = "SELECT * FROM books WHERE book_id = ?";
+            $sql = "SELECT DISTINCT books.*, categories.name as category_name
+            FROM books 
+            LEFT JOIN categories ON books.category_id = categories.category_id WHERE book_id = ? ORDER BY book_id DESC" ;
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$id]);
             $data = $stmt->fetch();
@@ -75,6 +81,7 @@ class BookQuery
                 $book = new Book();
                 $book->book_id = $data["book_id"];
                 $book->category_id = $data["category_id"];
+                $book->category_name = $data["category_name"];
                 $book->title = $data["title"];
                 $book->author = $data["author"];
                 $book->description = $data["description"];
