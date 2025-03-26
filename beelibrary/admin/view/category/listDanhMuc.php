@@ -70,16 +70,16 @@
                             <?php foreach ($listDanhMuc as $key => $danhmuc): ?>
                               <tr>
                                 <td><?= $key + 1 ?></td>
-                                <td><?= $danhmuc['name'] ?></td>
-                                <td><?= $danhmuc['description'] ?></td>
+                                <td><?= $danhmuc->name ?></td>
+                                <td><?= $danhmuc->description ?></td>
                                 <td>
-                                  <a href="<?= BASE_URL_ADMIN . '?act=form-edit-category&id_category=' . $danhmuc['category_id'] ?>">
+                                  <a href="<?= BASE_URL_ADMIN . '?act=form-edit-category&id_category=' . $danhmuc->category_id ?>">
                                     <button class='btn btn-warning'>Sửa</button>
                                   </a>
-
-                                  <a href="<?= BASE_URL_ADMIN . '?act=delete-category&id_category=' . $danhmuc['category_id'] ?>" onclick="return confirm('Bạn chắc muốn xoá phân loại này chứ?')">
-                                    <button class='btn btn-danger'>Xoá</button>
-                                  </a>
+                                  <form action="?act=delete-category" method="POST" onsubmit="return confirm('Bạn chắc chứ')" style="display: inline-block;">
+                                    <input type="hidden" name="id_category" value="<?= $danhmuc->category_id ?>">
+                                    <button type="submit" class='btn btn-danger'>Xoá</button>
+                                  </form>
                                 </td>
                               </tr>
                             <?php endforeach ?>

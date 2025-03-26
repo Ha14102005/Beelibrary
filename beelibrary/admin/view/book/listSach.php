@@ -55,10 +55,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($bookList as $book) { ?>
+                                            <?php foreach ($bookList as $key => $book) { ?>
                                                 <tr>
-                                                    <td><?= $book->book_id ?></td>
-                                                    <td><?= $book->category_id ?></td>
+                                                    <td><?=$key+1 ?></td>
+                                                    <td><?= $book->category_name ?></td>
                                                     <td><?= $book->title ?></td>
                                                     <td><?= $book->author ?></td>
                                                     <td class="description">
@@ -78,9 +78,9 @@
                                                     <td><?= $book->stock ?></td>
                                                     <td><?= $book->published_date ?></td>
                                                     <td>
-                                                        <a href="?act=detail-book&id=<?= $book->book_id ?>">Xem</a>
-                                                        <a href="?act=update-book&id=<?= $book->book_id ?>">Sửa</a>
-                                                        <a href="?act=delete-book&id=<?= $book->book_id ?>" onclick="return confirm('Bạn có chắc chắn xoá?')">Xoá</a>
+                                                        <a class="btn btn-primary" href="?act=detail-book&id=<?= $book->book_id ?>">Xem</a>
+                                                        <a class="btn btn-warning" href="?act=update-book&id=<?= $book->book_id ?>">Sửa</a>
+                                                        <a class="btn btn-danger" href="?act=delete-book&id=<?= $book->book_id ?>" onclick="return confirm('Bạn có chắc chắn xoá?')">Xoá</a>
                                                     </td>
                                                 </tr>
                                             <?php } ?>

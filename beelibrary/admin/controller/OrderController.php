@@ -1,88 +1,130 @@
-<?php 
+<?php
 
-class AdminDonHangControler{
-    public $Order;
+class DonHangController
+{
+
+    // Kết nối model DonHang
+    public $modelDonHang;
+
     public function __construct()
-        {
-            $this->Order=new AdminDonHang();
-        }
-    public function listDonHang()  {
-        $listDonHang = $this->Order->getAllDonHang();
-        require_once  './view/order/list.php';
-
+    {
+        $this->modelDonHang = new DonHang();
     }
 
-   
+    // Liệt kê tất cả đơn hàng
+    public function listDonHang()
+    {
+        $donHang = $this->modelDonHang->getAll();  // Lấy tất cả đơn hàng
+        $arrPTTT = $this->modelDonHang->getPttt();
 
-    public function detailDonHang()  {
-        $id=$_GET['id_order'];
-        $DonHang=$this->Order->getDetailDonHang($id);
-        // var_dump($DonHang);
-        // die();
-        $SanPhamDonHang=$this->Order->getProductDonHang($id);
-        
-        if(isset($DonHang)){
-            require_once  './view/order/detail.php';
-        }
-        else{
-            header('location:'. BASE_URL_ADMIN .'?act=list-order');
-            exit();
-        }
+
+
+        $pTTT = array_column($arrPTTT, 'ten_phuong_thuc', 'id');
+
+        // Chuyển kết quả đến view
+        require_once './view/order/list.php';
     }
-    public function formEditDonHang()  {
-        $id=$_GET['id_order'];
-        $DonHang=$this->Order->getDetailDonHang($id);
-        $TrangThai=$this->Order->getStatusDonHang();
-        
-        // var_dump($danhmuc);
-        // die();
-        if(isset($DonHang)){
-            require_once  './view/order/update.php';
-        }
-        else{
-            header('location:'. BASE_URL_ADMIN .'?act=list-order');
-            exit();
-        }
+
+    // Tìm kiếm đơn hàng theo mã và trạng thái
+    public function searchDonHang()
+    {
+
+        // var_dump($_POST);
+        // Lấy các tham số từ POST thay vì GET
+        $search = $_POST['search'] ?? '';
+    $status = $_POST['status'] ?? '';
+
+    $donHang = $this->modelDonHang->searchOrders($search, $status);
+    $arrPTTT = $this->modelDonHang->getPttt(); // Lấy phương thức thanh toán
+    $pTTT = !empty($arrPTTT) ? array_column($arrPTTT, 'ten_phuong_thuc', 'id') : [];
+
+
+
+        // Hiển thị kết quả tìm kiếm
+        require_once './view/order/list.php';
     }
-    public function postEditDonHang()  {
-        if($_SERVER['REQUEST_METHOD']=='POST'){
-            //lay ra du lieu
-            $id=$_POST['id'];
-            $recipient_name =$_POST['recipient_name'];
-            $recipient_phone =$_POST['recipient_phone'];
-            $recipient_email =$_POST['recipient_email'];
-            $recipient_address =$_POST['recipient_address'];
-            $status =$_POST['status_id'];
+
+    //Chi tiết đơn hàng
+
+    public function detailDonHang()
+    {
+        $id = $_GET['id'];
+        // var_dump($id);die;
+
+        // lấy thông tin đơn hàng ở bảng don_hangs
+        $donHang = $this->modelDonHang->getDetailDonHang($id);
+        // var_dump($donHang);die;
+        $arrPTTT = $this->modelDonHang->getPttt();
+        $pTTT = array_column($arrPTTT, 'ten_phuong_thuc', 'id');
+        // lấy danh sách sản phẩm đã đặt của đơn hàng ở bảng chi_tiet_don_hangs
+        $sanPhamDonHang = $this->modelDonHang->getListSpDonHang($id);
+        // var_dump($sanPhamDonHang);die();
+        require_once './view/order/detail.php';
+    }
+
+    // Xử lý xóa
+    public function Delete()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
-            //tao mang chua du lieu
-            $errors=[];
-            if(empty($recipient_name)){
-                $errors['recipient_name']='Tên người nhận không được để trống';
-            }
-            if(empty($recipient_phone)){
-                $errors['recipient_phone']='SĐT người nhận không được để trống';
-            }
-            if(empty($recipient_email)){
-                $errors['recipient_email']='Email người nhận không được để trống';
-            }
-            if(empty($recipient_address)){
-                $errors['recipient_address']='Địa chỉ người nhận không được để trống';
-            }
-            //neu khong co loi
-            if(empty($errors)){
-                $this->Order->updateDonHang($id,$recipient_name,$recipient_phone,$recipient_email,$recipient_address,$status);
-                header('location:'. BASE_URL_ADMIN .'?act=list-order');
-                exit();
-            }else{
-                //tra ve trang them
-                $DonHang=['id'=>$id,'recipient_name'=>$recipient_name,'recipient_phone'=>$recipient_phone,'recipient_email'=>$recipient_email,'recipient_address'=>$recipient_address];   
-                require_once './view/order/list.php';
-            }
+            $id = $_POST['id_don_hang'];
+            // var_dump($id);
 
-        }  
+            $deleteDonHang = $this->modelDonHang->deleteDonHang($id);
+            // echo'them thna ckgn';
+            
+            header('Location: ?act=don-hang'); // Sửa lại khoảng trắng
+            exit();
+        }
     }
-    
-    
-}
 
-?>
+
+    public function ShowUpdate()
+    {
+
+        $id = $_GET['id'];
+        $donHangShow = $this->modelDonHang->donHangShow($id);
+        //  print_r($donHangShow);die;
+        $arrPTTT = $this->modelDonHang->getPttt();
+        $pTTT = array_column($arrPTTT, 'ten_phuong_thuc', 'id');
+// var_dump($donHangShow);die;
+        // var_dump($donHangShow);die;
+        require_once './view/order/update.php';
+    }
+
+
+    // Xử lý logic update
+    public function handleUpdate()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = isset($_POST['id']) ? intval($_POST['id']) : null;
+            $trang_thai = trim($_POST['trang_thai']);
+            // var_dump($trang_thai);die;
+            // Validate
+            $Error = [];
+            if (empty($trang_thai)) {
+                $Error['trang_thai'] = 'Trạng thái là bắt buộc';
+            }
+
+            if (empty($Error)) {
+                // Thực hiện cập nhật trạng thái đơn hàng
+                if ($this->modelDonHang->updateDonHang($id, $trang_thai)) {
+                    unset($_SESSION['Error']);
+                    $_SESSION['message'] = 'Cập nhật trạng thái thành công!';
+                } else {
+                    $_SESSION['message'] = 'Cập nhật thất bại. Vui lòng thử lại!';
+                }
+
+                // Điều hướng về danh sách đơn hàng
+                // echo"them thanh cong";
+                header('Location: ?act=don-hang');
+                exit();
+            } else {
+                $_SESSION['Error'] = $Error;
+                header("Location: ?act=form-sua-don-hang&id_don_hang=$id");
+                exit();
+            }
+        }
+    }
+}

@@ -40,7 +40,11 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="category_id">Danh mục</label>
-                                            <input type="text" class="form-control" name="category_id" id="category_id" required>
+                                            <select class="form-control" name="category_id" id="category_id">
+                                                <?php foreach ($listDanhMuc as $category) { ?>
+                                                    <option   value="<?= $category->category_id ?>"><?= $category->name ?></option>
+                                                <?php } ?>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="title">Tên sách</label>

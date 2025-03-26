@@ -11,6 +11,8 @@ class Book
     public $description;
     public $image;
     public $published_date;
+    public $category_name; // ✅ Thêm thuộc tính này
+
 
     public function __construct()
     {

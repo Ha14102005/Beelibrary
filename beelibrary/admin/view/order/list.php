@@ -15,125 +15,140 @@
 
         <!-- content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1>Quản lí đơn hàng</h1>
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+                                    <h4 class="mb-sm-0">Quản lý đơn hàng</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                                            <li class="breadcrumb-item active">Quản lý đơn hàng</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">DataTables</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </section>
 
-            <!-- Main content -->
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <!-- <div class="card-header">
-                                   
 
-                                </div> -->
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                        <div class="row">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
-                                                    <thead>
-                                                        <tr>
-                                                            <th rowspan="1" colspan="1">STT</th>
-                                                            <th rowspan="1" colspan="1">Mã đơn hàng</th>
-                                                            <th rowspan="1" colspan="1">Tên người nhận</th>
-                                                            <th rowspan="1" colspan="1">Email</th>
-                                                            <th rowspan="1" colspan="1">Số điện thoại</th>
-                                                            <th rowspan="1" colspan="1">Địa chỉ</th>
-                                                            <th rowspan="1" colspan="1">Ngày đặt</th>
-                                                            <th rowspan="1" colspan="1">Đơn giá</th>
-                                                            <th rowspan="1" colspan="1">Phương thước thanh toán</th>
-                                                            <th rowspan="1" colspan="1">Trạng thái</th>
-                                                            <th rowspan="1" colspan="1">Thao tác</th>
 
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                        <div class="row">
+                            <div class="col">
 
-                                                        <?php foreach ($listDonHang as $key => $donhang): ?>
+                                <div class="h-100">
+                                    <div class="card">
+                                        <div class="card-header align-items-center d-flex justify-content-between">
+
+
+
+                                            <!-- Search Form -->
+                                            <form class="d-flex me-3" action="index.php?act=searchDonHang" method="POST" role="search">
+                                                <input type="search" class="form-control me-2" placeholder="Tìm mã đơn hàng..." aria-label="Search" name="search" />
+                                                <select class="form-control me-2" name="status">
+                                                    <option value="">Tất cả trạng thái</option>
+                                                    <option value="Chờ xác nhận">Chờ xác nhận</option>
+                                                    <option value="đã xác nhận">Đã xác nhận</option>
+                                                    <option value="Đang giao">Đang giao</option>s
+                                                    <option value="Đã giao">Đã giao</option>
+                                                    <option value="Đã hoàn thành">Đã hoàn thành</option>
+                                                    <option value="Đã thất bại">Đã thất bại</option>
+                                                    <option value="Đã hủy">Đã hủy</option>
+                                                </select>
+                                                <input class="btn btn-outline-primary" type="submit" value="Tìm kiếm" />
+                                            </form>
+
+
+
+
+
+
+
+
+                                        </div><!-- end card header -->
+
+                                        <div class="card-body">
+                                            <div class="live-preview">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-nowrap align-middle mb-0">
+                                                        <thead>
                                                             <tr>
-                                                                <td><?= $key + 1 ?></td>
-                                                                <td><?= $donhang['order_code'] ?></td>
-                                                                <td><?= $donhang['recipient_name'] ?></td>
-                                                                <td><?= $donhang['recipient_email'] ?></td>
-                                                                <td><?= $donhang['recipient_phone'] ?></td>
-                                                                <td><?= $donhang['recipient_address'] ?></td>
-                                                                <td><?= $donhang['order_date'] ?></td>
-                                                                <td><?= $donhang['total_amount'] ?></td>
-                                                                <td><?= $donhang['payment_method_id'] ?></td>
-                                                                <td><?= $donhang['status_name'] ?></td>
-                                                                <td>
-
-                                                                    <a href="<?= BASE_URL_ADMIN . '?act=detail-order&id_order=' . $donhang['order_id'] ?>">
-                                                                        <button class='btn btn-warning' style="height:40px; width:40px" >
-
-                                                                            <i class="fas fa-eye"></i>
-                                                                        </button>
-                                                                    </a>
-
-                                                                    <a href="<?= BASE_URL_ADMIN . '?act=form-edit-order&id_order=' . $donhang['order_id'] ?>">
-                                                                        <button class='btn btn-primary'>
-                                                                        <i class="fas fa-wrench fa-sm" style="color: #ffffff;"></i>
-                                                                    </a>
-
-
-                                                                </td>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Mã đơn hàng</th>
+                                                                <th scope="col">Ngày đặt</th>
+                                                                <th scope="col">Trạng thái đơn hàng</th>
+                                                                <th scope="col">Phương Thức Thanh Toán</th>
+                                                                <th scope="col">Thao tác</th>
                                                             </tr>
-                                                        <?php endforeach ?>
-                                                        <?php //endif; 
-                                                        ?>
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th rowspan="1" colspan="1">STT</th>
-                                                            <th rowspan="1" colspan="1">Mã đơn hàng</th>
-                                                            <th rowspan="1" colspan="1">Tên người nhận</th>
-                                                            <th rowspan="1" colspan="1">Email</th>
-                                                            <th rowspan="1" colspan="1">Số điện thoại</th>
-                                                            <th rowspan="1" colspan="1">Địa chỉ</th>
-                                                            <th rowspan="1" colspan="1">Ngày đặt</th>
-                                                            <th rowspan="1" colspan="1">Đơn giá</th>
-                                                            <th rowspan="1" colspan="1">Phương thước thanh toán</th>
-                                                            <th rowspan="1" colspan="1">Trạng thái</th>
-                                                            <th rowspan="1" colspan="1">Thao tác</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php if (!empty($donHang)): ?>
+                                                                <?php foreach ($donHang as $index => $donHangItem): ?>
+
+                                                                    <tr>
+                                                                        <td class="fw-medium"><?= $index + 1 ?></td>
+                                                                        <td><?= ($donHangItem['ma_don_hang']) ?></td>
+                                                                        <td><?= ($donHangItem['ngay_dat_hang']) ?></td>
+                                                                        <td><?= ($donHangItem['trang_thai']) ?></td>
+                                                                        <td><?= ($pTTT[$donHangItem['phuong_thuc_thanh_toan_id']]) ?></td>
+
+                                                                        <td>
+                                                                            <div class="hstack gap-3 flex-wrap">
+
+
+                                                                                <a href="?act=chi-tiet-don-hang&id=<?= $donHangItem['id'] ?>" class="link-success fs-15">
+                                                                                    <button class="btn btn-primary">Chi tiết</button>
+                                                                                </a>
+
+                                                                                <a href="?act=form-sua-don-hang&id=<?= $donHangItem['id'] ?>" class="link-success fs-15"><button class="btn btn-warning">Sửa</button></i></a>
+
+                                                                                <?php if ($donHangItem['trang_thai'] === 'Đã huỷ'): ?>
+                                                                                    <form action="?act=delete-don-hang" method="POST" onsubmit="return confirm('Bạn có đồng ý xóa không?')">
+                                                                                        <input type="hidden" name="id_don_hang" value="<?= $donHangItem['id'] ?>">
+                                                                                        <button class="btn btn-danger" type="submit">
+                                                                                            Xoá
+                                                                                        </button>
+                                                                                    </form>
+                                                                                <?php endif; ?>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php endforeach; ?>
+                                                            <?php else: ?>
+                                                                <tr>
+                                                                    <td colspan="7" class="text-center">Không tìm thấy kết quả.</td>
+                                                                </tr>
+                                                            <?php endif; ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
 
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
-        </div>
+
+
+                                        <div class="d-none code-view">
+                                            <pre class="language-markup" style="height: 275px;"><code>&lt;table class=&quot;table table-nowrap&quot;&gt;
+
+            </div>
+          </div><!-- end card-body -->
+        </div><!-- end card -->
+
+</div>
+
+      </div> <!-- end .h-100-->
+
+    </div> <!-- end col -->
+  </div>
+
+</div>
+<!-- container-fluid -->
+</div>
         <!-- /.content-wrapper -->
 
         <!-- Code injected by live-server -->

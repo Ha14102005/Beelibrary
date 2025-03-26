@@ -10,20 +10,7 @@ class Admin
     }
 
     // Kết nối cơ sở dữ liệu
-    private function connectDB()
-    {
-        $host = 'localhost';
-        $dbname = 'bee_library';
-        $username = 'root';
-        $password = '';
-        try {
-            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $pdo;
-        } catch (PDOException $e) {
-            die("Kết nối thất bại: " . $e->getMessage());
-        }
-    }
+
 
     // Lấy tất cả tài khoản theo role
     public function getAllTaiKhoan($role)
@@ -57,22 +44,36 @@ class Admin
 
     // Kiểm tra đăng nhập
     public function checkLogin($email, $password)
-    {
-        try {
-            $sql = "SELECT * FROM users WHERE email = :email";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-            $stmt->execute();
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+{
+    try {
+        $sql = "SELECT * FROM users WHERE email = :email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':email' => $email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC); // Chỉ lấy dữ liệu dạng key-value
 
-            if ($user && password_verify($password, $user['password'])) {
-                return $user;
-            }
-            return false;
-        } catch (Exception $e) {
-            return false;
+        // Kiểm tra user có tồn tại không
+        if (!$user) {
+            return "Sai tài khoản hoặc mật khẩu"; // Email không tồn tại
         }
+
+        // Kiểm tra mật khẩu có đúng không
+        if (!password_verify($password, $user['password'])) {
+            return "Sai tài khoản hoặc mật khẩu"; // Mật khẩu sai
+        }
+
+        // Kiểm tra quyền admin
+        if ($user['role'] !== 'admin') {
+            return "Tài khoản không có quyền đăng nhập";
+        }
+
+        return $user; // Trả về toàn bộ thông tin user
+    } catch (Exception $e) {
+        return "Lỗi hệ thống: " . $e->getMessage();
     }
+}
+
+
+
 
     // Lấy thông tin tài khoản theo ID
     public function getDetailTaiKhoan($id)

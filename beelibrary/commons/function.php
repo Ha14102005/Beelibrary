@@ -21,13 +21,21 @@ function connectDB() {
         echo ("Connection failed: " . $e->getMessage());
     }
 }
-function checkLoginAdmin() {
-    if(isset($_SESSION["usr_admin"])) {
-
-        require_once './view/auth/formLogin.php';
-        exit();
- }   
-}
+function checkLoginAdmin(){
+    if (!isset($_SESSION['user_admin'])) { //không có sestion thì ridiẻct về admin
+      require_once './view/auth/formLogin.php';
+      exit();
+    }
+   }
+function deleteSessionError(){
+    if (isset($_SESSION['flash'])) {
+        //hủy session sau khi đã tải trang
+        unset($_SESSION['flash']);
+        session_unset();
+        // session_destroy();
+  
+    }
+  }
 function pdo_query($sql, $sql_args = [])
 {
     $conn = connectDB(); // Kết nối cơ sở dữ liệu

@@ -3,19 +3,21 @@
 class BookController
 {
     public $bookQuery;
-    
+    public $Category;
+
     public function __construct()
     {
         $this->bookQuery = new BookQuery();
+        $this->Category=new AdminDanhMuc();
+
     }
 
-    public function __destruct()
-    {
-    }
+    public function __destruct() {}
 
     public function showList()
     {
         $bookList = $this->bookQuery->all();
+
         require_once "./view/book/listSach.php";
     }
 
@@ -23,7 +25,8 @@ class BookController
     {
         $book = new Book();
         $thongBaoLoi = "";
-        $thongBaoThanhCong = "";
+        $listDanhMuc = $this->Category->getAllDanhMuc();
+
 
         if (isset($_POST["submitForm"])) {
             $book->category_id = trim($_POST["category_id"]);
@@ -53,8 +56,8 @@ class BookController
                 $dataCreate = $this->bookQuery->insert($book);
 
                 if ($dataCreate === "ok") {
-                    $thongBaoThanhCong = "Tạo mới thành công. Mời tiếp tục tạo mới hoặc quay lại trang danh sách";
-                    $book = new Book();
+                    header("Location: ?act=list-book");
+                    exit();
                 }
             }
         }
@@ -65,6 +68,8 @@ class BookController
     {
         if ($id !== "") {
             $book = $this->bookQuery->find($id);
+            $listDanhMuc = $this->Category->getAllDanhMuc();
+
             include "./view/book/detail.php";
         } else {
             echo "Lỗi: Không nhận được thông tin ID. Mời bạn kiểm tra lại. <hr>";
@@ -74,6 +79,8 @@ class BookController
     public function showUpdate($id)
     {
         if ($id !== "") {
+            $listDanhMuc = $this->Category->getAllDanhMuc();
+
             $book = $this->bookQuery->find($id);
             $thongBaoLoi = "";
             $thongBaoThanhCong = "";
@@ -81,6 +88,7 @@ class BookController
             if (isset($_POST["submitForm"])) {
                 $book->title = trim($_POST["title"]);
                 $book->author = trim($_POST["author"]);
+                $book->category_id = trim($_POST["category_id"]);
                 $book->description = trim($_POST["description"]);
                 $book->price = trim($_POST["price"]);
                 $book->stock = trim($_POST["stock"]);
@@ -97,7 +105,7 @@ class BookController
                     }
                 }
 
-                if ($book->title === "" || $book->author === "" || $book->description === "" || $book->price === "" || $book->stock === "" || $book->published_date === "") {
+                if ($book->title === "" || $book->author === "" || $book->category_id === "" || $book->description === "" || $book->price === "" || $book->stock === "" || $book->published_date === "") {
                     $thongBaoLoi = "Tiêu đề, Tác giả, Giá, và Ngày xuất bản là bắt buộc. Hãy nhập đầy đủ.";
                 }
 
@@ -105,7 +113,8 @@ class BookController
                     $dataUpdate = $this->bookQuery->update($id, $book);
 
                     if ($dataUpdate) {
-                        $thongBaoThanhCong = "Chỉnh sửa thành công. Mời tiếp tục chỉnh sửa hoặc quay lại trang danh sách";
+                        header("Location: ?act=list-book");
+                exit();
                     }
                 }
             }
