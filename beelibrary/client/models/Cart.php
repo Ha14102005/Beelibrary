@@ -25,19 +25,19 @@ class Cart {
         return $this->db->lastInsertId();
     }
 
-    public function addItemToCart($cart_id, $product_id, $quantity) {
-        $query = "INSERT INTO cart_item (cart_id, product_id, quantity, price) VALUES (:cart_id, :product_id, :quantity, (SELECT price FROM product WHERE id = :product_id))";
+    public function addItemToCart($cart_id, $book_id, $quantity) {
+        $query = "INSERT INTO cart_item (cart_id, book_id, quantity, price) VALUES (:cart_id, :book_id, :quantity, (SELECT price FROM books WHERE book_id = :book_id))";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':cart_id', $cart_id);
-        $stmt->bindValue(':product_id', $product_id);
+        $stmt->bindValue(':book_id', $book_id);
         $stmt->bindValue(':quantity', $quantity);
         $stmt->execute();
     }
 
     public function getCartItemsByUserId($user_id) {
-        $query = "SELECT ci.product_id, p.name, p.image_src, ci.quantity, ci.price FROM cart_item ci
+        $query = "SELECT ci.book_id, p.title, p.image, ci.quantity, ci.price FROM cart_item ci
                   JOIN cart c ON ci.cart_id = c.cart_id
-                  JOIN product p ON ci.product_id = p.id
+                  JOIN books p ON ci.book_id = p.book_id
                   WHERE c.user_id = :user_id AND c.status = 'pending'";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':user_id', $user_id);

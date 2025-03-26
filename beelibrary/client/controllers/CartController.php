@@ -16,7 +16,7 @@ class CartController {
             exit();
         }
 
-        $product_id = $params['product_id'];
+        $book_id = $params['book_id'];
         $quantity = $params['quantity'];
         $user_id = $_SESSION['user_id'];
 
@@ -27,7 +27,7 @@ class CartController {
             $cart_id = $this->cartModel->createCart($user_id);
         }
 
-        $this->cartModel->addItemToCart($cart_id, $product_id, $quantity);
+        $this->cartModel->addItemToCart($cart_id, $book_id, $quantity);
         header("Location: " . BASE_URL . "index.php?controller=Cart&action=viewCart");
     }
 

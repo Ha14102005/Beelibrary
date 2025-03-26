@@ -32,8 +32,8 @@ class Order {
 
     // Thêm sản phẩm vào đơn hàng
     public function addItemsToOrder($order_id, $cart_id) {
-        $query = "INSERT INTO order_items (order_id, product_id, quantity, price)
-                  SELECT :order_id, ci.product_id, ci.quantity, ci.price
+        $query = "INSERT INTO order_items (order_id, book_id, quantity, price)
+                  SELECT :order_id, ci.book_id, ci.quantity, ci.price
                   FROM cart_item ci
                   WHERE ci.cart_id = :cart_id";
         
@@ -63,9 +63,9 @@ class Order {
 
     // Lấy danh sách sản phẩm trong đơn hàng
     public function getOrderItems($order_id) {
-        $query = "SELECT oi.product_id, p.name, oi.quantity, oi.price, (oi.quantity * oi.price) AS total_price
+        $query = "SELECT oi.book_id, p.title, oi.quantity, oi.price, (oi.quantity * oi.price) AS total_price
                   FROM order_items oi
-                  JOIN product p ON oi.product_id = p.id
+                  JOIN books p ON oi.book_id = p.book_id
                   WHERE oi.order_id = :order_id";
         
         $stmt = $this->db->prepare($query);

@@ -29,10 +29,10 @@
                 <?php if ($order_items): ?>
                     <?php foreach ($order_items as $item): ?>
                         <tr>
-                            <td><?= htmlspecialchars($item['name']) ?></td>
+                            <td><?= htmlspecialchars($item['title']) ?></td>
                             <td><?= number_format($item['price'], 0, ',', '.') ?> VND</td>
                             <td><?= $item['quantity'] ?></td>
-                            <td><?= number_format($item['price'] * $item['quantity'], 0, ',', '.') ?> VND</td>
+                            <td><?= number_format($item['price'] * $item['quantity'], 0, ',', '.') ?> VNĐ</td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

@@ -1,7 +1,3 @@
-<?php
-require_once __DIR__ . '/../views/layout/header.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +5,7 @@ require_once __DIR__ . '/../views/layout/header.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>client/assets/css/stylecart.css">
+    <?php include 'layout/header.php'; ?>
 </head>
 <body>
     <h1>Your Cart</h1>
@@ -31,10 +28,10 @@ require_once __DIR__ . '/../views/layout/header.php';
                         $total_price += $item_total; // Cộng vào tổng tiền
                     ?>
                         <tr>
-                            <td><?= htmlspecialchars($item['name']); ?></td>
+                            <td><?= htmlspecialchars($item['title']); ?></td>
                             <td><?= htmlspecialchars($item['quantity']); ?></td>
-                            <td>$<?= number_format($item['price'], 2); ?></td>
-                            <td>$<?= number_format($item_total, 2); ?></td>
+                            <td><?= number_format($item['price'], 2); ?>VNĐ</td>
+                            <td><?= number_format($item_total, 2); ?>VNĐ</td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
